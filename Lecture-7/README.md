@@ -99,6 +99,8 @@ A multi valued dependency exists if for a set of three attributes X, Y and Z, co
 
 In such a case, it is said that X-->Y and X-->Z. (Read as, X multi-determines Y and X multi-determines Z)
 
+Practically speaking, multi-valued dependency arises when we club different many to many relations in a table, as an example, there is a many to many relationship between employee and project, and employee and hobby. If all these three attributes are combined into a single relation, we'll have a multi-valued dependency.
+
 Let's understand with the help of the following example:
 
 ![Table-not-in-4NF](./assets/Table-not-in-4NF.png)
@@ -123,3 +125,75 @@ However, the table is not in 4NF, as EMP_ID multi determines Project_ID and EMP_
 
 **How can we decompose this relation to 4NF?**
 
+As discussed previously, we start with those functional dependencies which are in violation of the normal form. In this case, the dependencies EMP_ID --> PROJECT_ID and EMP_ID --> HOBBY_ID which are in violation of 4NF. Hence, we create relation R1(EMP_ID, PROJECT_ID) with the functional dependency EMP_ID -> PROJECT_ID and another relation R2(EMP_ID, HOBBY_ID) with the functional dependency EMP_ID -> HOBBY_ID. From the initial set (EMP_ID, HOBBY_ID, PROJECT_ID), the dependent attributes (HOBBY_ID, PROJECT_ID) can be removed and we are left with EMP_ID. Theoretically speaking, we should have a join table with the attribute EMP_ID but since there is only one attribute in this relation, we don't need this join table.
+
+Hence, the table after decomposing to 4NF is :
+
+![Table-in-4NF](./assets/Table-in-4NF.png)
+
+**Cardinality in DBMS**
+
+1. One-to-one-mapping: In this mapping, one entity from set A can be related to only one entity from set B.
+
+As an example, the relation between Person and Aadhar entities is one-to-one as one person can have only one Aadhar, and one Aadhar can only belong to one person.
+
+![One-to-One-Mapping](./assets/One-to-One-Mapping.png)
+
+In order to convert a one-to-one mapping to relations, we can come up with the following two approaches:
+
+![One-To-One-Mapping-First-Relation](./assets/One-To-One-Mapping-First-Relation.png)
+
+![One-To-One-Mapping-Second-Relation](./assets/One-To-One-Mapping-Second-Relation.png)
+
+2. One-to-many-mapping: In this mapping, one entity from set A is related to multiple entities from set B.
+
+As an example, the relation between Person and Bank Account Entities is one-to-many as one person can have multiple bank accounts but one bank account only belongs to a single person.
+
+![One-to-Many-Mapping](./assets/One-to-Many-Mapping.png)
+
+
+![One-to-Many-Mapping-Relations](./assets/One-to-Many-Mapping-Relations.png)
+
+3. Many-to-one-mapping: In this type of mapping, multiple entities from set A are related to a single entity from set B.
+
+As an example, the relation between Employee and Department entities is many-to-one as one department can have multiple employees, but an employee can only have a single department.
+
+![Many-to-one-mapping](./assets/Many-to-one-mapping.png)
+
+For converting this ER diagram to relations, can come up with the following approach:
+
+![Many-to-One-Mapping-Relation](./assets/Many-to-One-Mapping-Relation.png)
+
+4. Many to many mapping: In this type of mapping, one entity from set A can be related to multiple entities from set B, and one entity from set B can be related to multiple entities from set A.
+
+As an example, the relation between Student and Course entities is many-to-many as one student can be enrolled in multiple courses, and one course can have multiple students enrolled in it.
+
+![Many-to-many-mapping](./assets/Many-to-many-mapping.png)
+
+An important point to know is that in case of a many-to-many mapping, apart from the table for the entities, we need to create a join table (sometimes also called a through table).
+
+![Many-to-Many-Mapping-Relations](./assets/Many-to-Many-Mapping-Relations.png)
+
+As an example, in the situation above, we would create the following tables: Student, Course and Student_Course_Join.
+
+Associations can prove to be useful while designing the database, as there are some frameworks like Ruby on Rails or ORMs like Sequelize where we need to specify the relationship between the entities, and it creates the join tables (if needed), and it also provides different functionalities to query the database efficiently.
+
+As an exercise, let's consider the design of a movie booking application DB. The requirements are:
+
+- User can book a movie on a particular theatre and timings
+
+- User can review a movie
+
+- User can review a theatre
+
+- Review involves rating and comments both
+
+- User can cancel a booking or if the payment is stuck then the booking can be pending else confirmed
+
+- User should be able to get all movies from a theatre
+
+- User should be able to get all theatres of a particular city where movie is running
+
+Here's the DB design I came up with:
+
+![Movie_Booking_System_DB_Design](./assets/Movie_Booking_System_DB_Design.png)
