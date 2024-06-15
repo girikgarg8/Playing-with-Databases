@@ -98,6 +98,13 @@ FULL Join can be visualized as follows in terms of Venn Diagram:
 
 Note: MySQL doesn't support FULL JOIN as yet. Can try this on LiveSQL by Oracle.
 
+If we have a usecase where we want to compute the full join wihtout using the `FULL JOIN` keyword, we can do so by taking the union of LEFT and RIGHT Join, as follows:
+
+```
+(SELECT * FROM CUSTOMER LEFT JOIN ORDER ON CUSTOMER.ORDER_ID = ORDER.ID) UNION 
+( SELECT * FROM CUSTOMER RIGHT JOIN ORDER ON CUSTOMER.ORDER_ID = ORDER.ID);
+```
+
 Hands on example:
 
 ![EMP-Table](./assets/EMP_table.png)

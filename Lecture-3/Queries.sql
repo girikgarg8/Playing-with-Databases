@@ -14,6 +14,8 @@ DELETE FROM SECOND WHERE NAME='Arun'; /* Beware- using DELETE without WHERE will
 
 DELETE FROM SECOND WHERE NAME LIKE '%i%' ORDER BY NAME LIMIT 1; /* Here, all the records which have 'i' in the name will be sorted in ascending order and only the row(s) with limit 1 will be deleted */
 
+/* Offset describes how many rows in the table to skip, while limit describes how many rows to display. Real life usecase of limit and offset: pagination implemented in search engines. The API sends a subset of the data described by the limit, and as we switch between different pages, the offset value changes. */
+
 SELECT * FROM SECOND;
 
 UPDATE SECOND SET DOB='1994-10-08' WHERE NAME='Nikhil'; /* Caution: Using the UPDATE statement without the WHERE clause will update all the rows !*/
